@@ -6,8 +6,8 @@ import MusicUploadForm from "@/components/musicUploadForm";
 import { FormProvider, useForm } from "react-hook-form";
 
 import CustomAudio from "@/components/audioPlayer";
-
-const Upload = () => {
+import { CustomAudio2 } from "@/components/audioPlayer2";
+const ReUpload = () => {
   const methods = useForm();
   return (
     <FormProvider {...methods}>
@@ -17,7 +17,8 @@ const Upload = () => {
           <MusicUploadForm></MusicUploadForm>
           <MediaFileDownload />
           <UploadBox>
-            <CustomAudio></CustomAudio>
+            {/* <CustomAudio></CustomAudio> */}
+            <CustomAudio2 />
           </UploadBox>
         </MainPageContainer>
       </MainPageWrapper>
@@ -25,12 +26,10 @@ const Upload = () => {
   );
 };
 
-export default Upload;
+export default ReUpload;
 
 const UploadBox = styled.div`
   width: 377px;
-
-  margin-top: 15px;
   margin-top: 15px;
   @media (min-width: 474px) {
     margin-left: 140px;

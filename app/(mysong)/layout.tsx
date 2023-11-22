@@ -2,8 +2,9 @@
 import styled from "@emotion/styled";
 import "../globals.css";
 
-import { Providers } from "../providers";
+// import { Providers } from "../../providers";
 
+import { Providers } from "../providers";
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <BodyStyle>

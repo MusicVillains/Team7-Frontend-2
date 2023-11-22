@@ -8,14 +8,11 @@ import {
   SliderThumb,
   SliderTrack,
   IconButton,
-  Flex,
-  Button,
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { playState } from "@/recoil/recoilstore";
 import { usePathname } from "next/navigation";
 import Interection from "@/api/Interection";
-import Reactquery from "../util/reactquery";
 
 export function CustomAudio2({ music_data, index, feedId, ref }: any) {
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -59,6 +56,7 @@ export function AudioPlayer({
   const parts = path.split("/"); // 경로를 '/' 문자로 분리
   const lastPart = parts[parts.length - 1]; // 마지막 부분을 가져오기
   const [blobUrl, setBlobUrl] = useState<any>(null);
+
   useEffect(() => {
     if (music_data) {
       const binaryData = atob(music_data);
@@ -72,8 +70,9 @@ export function AudioPlayer({
     }
   }, [music_data]);
 
+  //조회수 증가
   useEffect(() => {
-    if (play) {
+    if (lastPart != "reupload" && lastPart != "upload" && play) {
       Interection_plus(feedId);
     }
   }, [play]);
@@ -159,7 +158,13 @@ export function AudioPlayer({
         onFocus={undefined}
         onBlur={undefined}
         ref={callbackRef}
-        src={lastPart === "upload" ? music : blobUrl}
+        src={
+          lastPart === "upload"
+            ? music
+            : lastPart === "reupload"
+            ? music
+            : blobUrl
+        }
       />
     </Box>
   );

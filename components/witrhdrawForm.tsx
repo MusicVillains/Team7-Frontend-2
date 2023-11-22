@@ -11,18 +11,9 @@ const WithDrawForm = () => {
     formState: { errors },
   } = useFormContext();
   const [isEmpty, setIsEmpty] = useRecoilState(activewithdrawform);
-  const widthdrawTitle: string = watch("withdrawTitle");
-
+  const widthdrawTitle = watch("withdraw");
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // 제출 버튼을 클릭했을 때 실행되는 함수
-    console.log(data); // 폼 데이터 출력
-  };
-  const validateVillanType = () => {
-    const selectedVillanType = watch("villainType");
-    if (!selectedVillanType) {
-      return "빌런 유형은 필수입니다.";
-    }
-    return true;
+    console.log(data);
   };
 
   const WitdrawReason = [
@@ -33,9 +24,15 @@ const WithDrawForm = () => {
     { value: 5, label: "기타" },
   ];
 
-  const onChangeWithdraw = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value ? setIsEmpty(false) : setIsEmpty(true);
-  };
+  useEffect(() => {
+    if (widthdrawTitle) {
+      setIsEmpty(false);
+    } else {
+      setIsEmpty(true);
+    }
+    console.log(watch("withdraw"));
+  }, [WitdrawReason]);
+
   useEffect(() => {
     if (errors.withdrawTitle) {
       alert(errors.withdrawTitle.message);
@@ -49,14 +46,13 @@ const WithDrawForm = () => {
           <RadioInput
             id={`option${value}`}
             type="radio"
-            {...register("withdrawTitle", {
+            {...register("withdraw", {
               required: "탈퇴 사유를 선택해주세요.",
             })}
-            onChange={(e) => onChangeWithdraw(e)}
-            value={`${label}`}
+            value={label}
           />
           <RadioLabel htmlFor={`option${value}`}>{label}</RadioLabel>
-          {widthdrawTitle === `${label}` && <img src="/withdrawCheck.png" />}
+          {widthdrawTitle == `${label}` && <img src="/withdrawCheck.png" />}
         </CustomRadio>
       ))}
     </MusicWrapper>
@@ -68,50 +64,31 @@ export default WithDrawForm;
 const MusicWrapper = styled.form`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: flex-start;
 `;
 
-const MusicInput = styled.input`
-  width: 327px;
-  /* width: 100px; */
-  height: 48px;
-  background-color: rgba(0, 0, 0, 0.04);
-  border-radius: 8px;
-  margin-top: 8px;
-  border: none;
-`;
 const CustomRadio = styled.div`
   display: flex;
   justify-content: space-between;
   margin-right: 20px;
   cursor: pointer;
   margin-top: 30px;
-  /* width: 100%; */
 `;
 
 const RadioInput = styled.input`
   display: none;
   width: 100%;
-  /* margin-right: 200px; */
   &::after {
     content: "";
     margin-left: 550px;
   }
   &:checked + label {
-    color: #651fff; /* 선택한 경우 텍스트 색상 변경 */
-
-    /* &::after {
-      content: url("/withdrawCheck.png"); 
-      
-    } */
+    color: #651fff;
   }
 `;
 
 const RadioLabel = styled.label`
-  /* position: relative; */
   max-width: 600px;
-  /* overflow-x: visible; */
   padding-left: 30px;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.6);
@@ -119,6 +96,4 @@ const RadioLabel = styled.label`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-
-  /* margin-top: 5px; */
 `;
