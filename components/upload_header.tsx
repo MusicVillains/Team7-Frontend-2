@@ -9,7 +9,7 @@ import SubmitFeed from "@/api/SubmitFeed";
 import { useRouter } from "next/navigation";
 import ReName from "@/api/Rename";
 import Feed from "@/api/Feed";
-import { useEffect, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import Modal from "./modal";
 import ModalForm from "./modalform";
 
@@ -24,7 +24,51 @@ interface propsType {
   name: string;
   type: string;
 }
-const UploadHeader = (props: propsType) => {
+interface pageType {
+  page: string;
+}
+
+interface PageFormType {
+  handleSubmit: FormEventHandler<HTMLFormElement>;
+  type : "submit" | "button" | "reset" | undefined;
+  isSubmitting : boolean;
+  uploadColor :string;
+  visibility : string;
+}
+
+const UploadURLForm = ({ page }: pageType) => {
+  return (
+    <Link href={page}>
+      <LogoLink>
+        <BackIcon width={55} height={24} />
+      </LogoLink>
+    </Link>
+  );
+};
+
+// 여기 수정해야됨
+const UploadPageForm = ({
+  handleSubmit,
+  type,
+  isSubmitting,
+  uploadColor,
+  visibility,
+}:PageFormType ) => {
+  return (
+    <ButtonForm onSubmit={handleSubmit}>
+      <ButtonWrap
+        type={type}
+        disabled={isSubmitting}
+        color={uploadColor}
+        visibility={visibility}
+      >
+        올리기
+      </ButtonWrap>
+    </ButtonForm>
+  );
+};
+
+const UploadHeader = ({ name, type }: propsType) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const path = usePathname();
   const router = useRouter();
@@ -49,7 +93,6 @@ const UploadHeader = (props: propsType) => {
   const [uploadColor, setUploadColor] = useState("rgba(0, 0, 0, 0.38)");
 
   const [NicknameColor, setNicknameColor] = useState("rgba(0, 0, 0, 0.38)");
-
   const [WithdrawColor, setWithdrawColor] = useState("rgba(0, 0, 0, 0.38)");
   useEffect(() => {
     if (isEmpty == false) {
@@ -113,50 +156,31 @@ const UploadHeader = (props: propsType) => {
   const onSubmitRename = (data: any) => {
     rename(data.rename);
   };
+
   return (
     <HeaderWrapper>
       <div>
         <HeaderTop>
           {lastPart === "mysong" ? (
-            <Link href="/mypage">
-              <LogoLink>
-                <BackIcon width={55} height={24} />
-              </LogoLink>
-            </Link>
+            <UploadURLForm page={"/mypage"} />
           ) : lastPart === "rename" ? (
-            <Link href="/mypage">
-              <LogoLink>
-                <BackIcon width={55} height={24} />
-              </LogoLink>
-            </Link>
+            <UploadURLForm page={"/mypage"} />
           ) : lastPart === "mysong" ? (
-            <Link href="/mypage">
-              <LogoLink>
-                <BackIcon width={55} height={24} />
-              </LogoLink>
-            </Link>
+            <UploadURLForm page={"/mypage"} />
           ) : lastPart === "myclapsong" ? (
-            <Link href="/mypage">
-              <LogoLink>
-                <BackIcon width={55} height={24} />
-              </LogoLink>
-            </Link>
+            <UploadURLForm page={"/mypage"} />
           ) : (
-            <Link href="/main?value=전체">
-              <LogoLink>
-                <BackIcon width={55} height={24} />
-              </LogoLink>
-            </Link>
+            <UploadURLForm page={"/main?value=전체"} />
           )}
 
-          <WordWrap color="rgba(0, 0, 0, 0.87);">{props.name}</WordWrap>
+          <WordWrap color="rgba(0, 0, 0, 0.87);">{name}</WordWrap>
           {lastPart === "upload" ? (
             <ButtonForm onSubmit={handleSubmit(onSubmitUpload)}>
               <ButtonWrap
                 type="submit"
                 disabled={isSubmitting}
                 color={uploadColor}
-                visibility={props.type}
+                visibility={type}
               >
                 올리기
               </ButtonWrap>
@@ -167,7 +191,7 @@ const UploadHeader = (props: propsType) => {
                 type="submit"
                 disabled={isSubmitting}
                 color={NicknameColor}
-                visibility={props.type}
+                visibility={type}
               >
                 완료
               </ButtonWrap>
@@ -178,7 +202,7 @@ const UploadHeader = (props: propsType) => {
                 type="submit"
                 disabled={isSubmitting}
                 color={uploadColor}
-                visibility={props.type}
+                visibility={type}
               >
                 완료
               </ButtonWrap>
@@ -189,7 +213,7 @@ const UploadHeader = (props: propsType) => {
                 type="submit"
                 disabled={isSubmitting}
                 color={WithdrawColor}
-                visibility={props.type}
+                visibility={type}
                 onClick={() => {
                   setModalIsOpen(true);
                 }}
@@ -201,7 +225,6 @@ const UploadHeader = (props: propsType) => {
                 onRequestClose={() => setModalIsOpen(false)}
               >
                 <ModalForm setModalIsOpen={setModalIsOpen}></ModalForm>
-                {/* <ModalForm></ModalForm> */}
               </Modal>
             </ButtonForm>
           ) : (
@@ -210,7 +233,7 @@ const UploadHeader = (props: propsType) => {
                 type="submit"
                 disabled={isSubmitting}
                 color="rgba(0, 0, 0, 0.38);"
-                visibility={props.type}
+                visibility={type}
               >
                 올리기
               </ButtonWrap>

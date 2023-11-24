@@ -8,10 +8,8 @@ const DeleteFeed = () => {
   const router = useRouter();
   const deletes = async () => {
     const memberId = getStorage("delete")?.replace(/\"/gi, "");
-
     try {
       const response: DeleteData = await instance.delete(`/feeds/${memberId}`);
-
       alert("삭제되었습니다");
       router.refresh();
       return response.data;
