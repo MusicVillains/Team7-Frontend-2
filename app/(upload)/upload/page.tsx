@@ -4,7 +4,6 @@ import UploadHeader from "@/components/upload_header";
 import MediaFileDownload from "@/components/mediafiledownload";
 import MusicUploadForm from "@/components/musicUploadForm";
 import { FormProvider, useForm } from "react-hook-form";
-import CustomAudio from "@/components/audioPlayer";
 import {CustomAudio2} from "@/components/audioPlayer2";
 
 const Upload = () => {

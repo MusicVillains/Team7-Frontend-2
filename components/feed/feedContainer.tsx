@@ -1,6 +1,6 @@
 "use client";
 import styled from "@emotion/styled";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import CustomAudio from "../audioPlayer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Modal from "../modal";
@@ -46,9 +46,9 @@ const FeedContainer = ({ data }: any) => {
   const searchParams = useSearchParams();
   const searchValue = searchParams.get("value") || "";
   const interection = Interection();
-  const { Interection_click, Interection_check } = Interection();
+  const { Interection_click } = Interection();
   const isLogin = isLoginStorage();
-  const { myclapfeed, myfeed } = Reactquery();
+  const { myclapfeed } = Reactquery();
   const router = useRouter();
   const [modalData, setModalData] = useState<any>([]);
   const path = usePathname();
@@ -118,7 +118,6 @@ const FeedContainer = ({ data }: any) => {
       },
     }
   );
-  // console.log(data);
   const My_Calp_data =
     data &&
     isLoginStorage() &&
