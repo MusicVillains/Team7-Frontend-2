@@ -6,7 +6,6 @@ import { playState } from "@/recoil/recoilstore";
 
 const MediaFileDownload = () => {
   const [music, setMusic] = useRecoilState(playState);
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<string | undefined>(
     fileInputRef.current?.value
@@ -77,17 +76,9 @@ const MediaFileDownload = () => {
               required: "오디오 파일을 등록해주세요",
               onChange: uploadProfile, // 커스텀 onChange 이벤트 핸들러를 등록
             })}
-            // ref = { fileInputRef }
           />
         </FileUploadLabel>
-        {/* {errors.audio && <div>errors.audio.message</div>} */}
-        {/* <FileUploadButton type="button" onClick={handleClickFileInput}>
-          파일 업로드 버튼
-        </FileUploadButton> */}
         등록할 음악 : {selectedFile}
-        {/* <button type="submit" disabled={isSubmitting}>
-          Submit
-        </button> */}
       </FileUploadForm>
     </FileUploadContainer>
   );

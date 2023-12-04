@@ -1,7 +1,6 @@
 "use client";
 import styled from "@emotion/styled";
 import { useCallback, useEffect, useRef, useState } from "react";
-import CustomAudio from "../audioPlayer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Modal from "../modal";
 import ModalForm from "../modalform";
