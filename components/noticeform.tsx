@@ -13,7 +13,6 @@ const NoticeForm = () => {
     const date: any = new Date(dateString);
     const now: any = new Date();
     const diff = now - date;
-
     const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
@@ -29,7 +28,6 @@ const NoticeForm = () => {
       return `${days}일 전`;
     }
   }
-  // b6d28bae6ee64dde8eed40522c022b32
   useEffect(() => {
     for (let i = 0; i < data?.length; i++) {
       if (data[i]?.notificationId) {
@@ -37,7 +35,6 @@ const NoticeForm = () => {
       }
     }
   }, []);
-  // 예시: 현재 시간에서 30분 전의 시간을 표시
   const date = new Date();
   date.setMinutes(date.getMinutes() - 30);
 
@@ -45,11 +42,10 @@ const NoticeForm = () => {
   console.log(data?.length);
   console.log(timeAgo); // "30분 전" 또는 해당하는 텍스트 출력
   const sortedData = data?.slice().sort((a: any, b: any) => {
-    // Compare the 'createdAt' timestamps for sorting
     const dateA: any = new Date(a.createdAt);
     const dateB: any = new Date(b.createdAt);
 
-    return dateB - dateA; // To sort in descending order (most recent first)
+    return dateB - dateA; 
   });
   return (
     <>
@@ -64,7 +60,6 @@ const NoticeForm = () => {
               </NoticeWord>
               <NoticeWord>
                 {item.interactionCount}명에게 박수받았어요!
-                {/* {item.ownerRead} */}
               </NoticeWord>
             </NoticeWordWrapper>
             <NoticeTimer>{getTimeAgo(item.createdAt)}</NoticeTimer>
@@ -74,7 +69,6 @@ const NoticeForm = () => {
     </>
   );
 };
-// item.ownerRead == "UNREAD"?
 export default NoticeForm;
 const NoticeClap = styled.div`
   width: 24px;

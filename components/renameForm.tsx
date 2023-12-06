@@ -10,6 +10,7 @@ const RenameForm = () => {
     getValues,
   } = useFormContext();
 
+
   const onSubmit = (data: any) => {
     // 제출 버튼을 클릭했을 때 실행되는 함수
     console.log(data); // 폼 데이터 출력
@@ -31,6 +32,7 @@ const RenameForm = () => {
             message:
               "닉네임에는 특수문자가 들어가면 안되고 첫글자가 숫자면 안됩니다",
           },
+          
         })}
         placeholder="닉네임을 입력해주세요"
         onChange={(e) => onChangeNickName(e)}

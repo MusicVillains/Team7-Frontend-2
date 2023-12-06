@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import ETC from "@/api/etc";
 import { FieldValues, SubmitHandler, useFormContext } from "react-hook-form";
+import { useRecoilState } from "recoil";
+import { activewithdrawform } from "@/recoil/recoilstore";
 interface StyledComponentProps {
   background?: string; // background 속성을 정의합니다.
 }
@@ -37,6 +39,8 @@ const ModalForm = (
     // 제출 버튼을 클릭했을 때 실행되는 함수
     console.log(data); // 폼 데이터 출력
   };
+  const [isEmpty, setIsEmpty] = useRecoilState(activewithdrawform);
+
   const path = usePathname();
   const parts = path.split("/"); // 경로를 '/' 문자로 분리
   const lastPart = parts[parts.length - 1]; // 마지막 부분을 가져오기
@@ -188,10 +192,3 @@ const ModalButtonWord = styled.div`
   font-weight: 500;
   line-height: 3;
 `;
-
-// function logout(arg0: () => void) {
-//   throw new Error("Function not implemented.");
-// }
-// // function logout(arg0: () => void) {
-// //   throw new Error("Function not implemented.");
-// // }

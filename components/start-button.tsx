@@ -2,8 +2,7 @@
 import styled from "@emotion/styled";
 import Link from "next/link";
 import KakaoLogo from "@/public/kakao.svg";
-import { isTemplateLiteralTypeNode } from "typescript";
-import axios, { AxiosError } from "axios";
+
 type Label =
   | "시작하기"
   | "카카오로 시작하기"
